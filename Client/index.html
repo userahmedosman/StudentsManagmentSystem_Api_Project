@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Students List</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="btnContainer">
+        <button id="fetchBtn">Fetch All Students</button>
+        <button id="fetchPassedBtn">Fetch Passed Students</button>
+        <button id="fetchById">Fetch Student By ID</button>
+        <textarea id="stdId" rows="4" cols="50"></textarea>
+
+    </div>
+    <div class="container">
+
+        <h1>Students List</h1>
+        
+        <table id="studentsTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>GPA</th>
+                </tr>
+            </thead>
+            <tbody id="studentsBody">
+                <!-- Data will be inserted here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
