@@ -19,7 +19,7 @@ namespace StudentApi.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
         //here we used StudentDTO
-        public ActionResult<IEnumerable<StudentDTO>> GetAllStudents() // Define a method to get all students.
+        public ActionResult<IEnumerable<StudentReturnDTO>> GetAllStudents() // Define a method to get all students.
         {
             //if (StudentDataSimulation.StudentsList.Count == 0) 
             //{
@@ -27,7 +27,7 @@ namespace StudentApi.Controllers
             //}
             //return Ok(StudentDataSimulation.StudentsList); // Returns the list of students.
 
-            List<StudentDTO> StudentsList = Student.GetAllStudents();
+            List<StudentReturnDTO> StudentsList = Student.GetAllStudents();
             if (StudentsList.Count == 0)
             {
                 return NotFound("No Students Found!");
@@ -41,12 +41,12 @@ namespace StudentApi.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
         // Method to get all students who passed
-        public ActionResult<IEnumerable<StudentDTO>> GetPassedStudents()
+        public ActionResult<IEnumerable<StudentReturnDTO>> GetPassedStudents()
 
         {
             // var passedStudents = StudentDataSimulation.StudentsList.Where(student => student.GPA >= 50).ToList();
 
-            List<StudentDTO> PassedStudentsList = Student.GetPassedStudents();
+            List<StudentReturnDTO> PassedStudentsList = Student.GetPassedStudents();
             if (PassedStudentsList.Count == 0)
             {
                 return NotFound("No Students Found!");
@@ -117,7 +117,7 @@ namespace StudentApi.Controllers
 
             //newStudent.Id = StudentDataSimulation.StudentsList.Count > 0 ? StudentDataSimulation.StudentsList.Max(s => s.Id) + 1 : 1;
 
-            Student student = new Student(new StudentDTO(newStudentDTO.Id, newStudentDTO.Name, newStudentDTO.Age, newStudentDTO.GPA));
+            Student student = new Student(new StudentDTO(newStudentDTO.Id, newStudentDTO.Name, newStudentDTO.Age, newStudentDTO.GPA, newStudentDTO.Email, newStudentDTO.PasswordHash, newStudentDTO.Role));
             student.Save();
 
             newStudentDTO.Id = student.ID;
