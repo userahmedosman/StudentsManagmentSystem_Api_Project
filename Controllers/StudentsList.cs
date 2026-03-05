@@ -3,6 +3,7 @@
 using Microsoft.AspNetCore.Mvc;
 using StudentBusinessLayer;
 using DTO;
+using Microsoft.IdentityModel.Tokens;
 
 namespace StudentApi.Controllers
 {
@@ -74,7 +75,7 @@ namespace StudentApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public ActionResult<StudentDTO> GetStudentById(int id)
+        public ActionResult<StudentReturnDTO> GetStudentById(int id)
         {
 
             if (id < 1)
@@ -95,7 +96,7 @@ namespace StudentApi.Controllers
             }
 
             //here we get only the DTO object to send it back.
-            StudentDTO StudentDTO = student.SDTO;
+            StudentReturnDTO StudentDTO = student.SRDTO;
 
             //we return the DTO not the student object.
             return Ok(StudentDTO);
@@ -144,7 +145,7 @@ namespace StudentApi.Controllers
 
             //var student = StudentDataSimulation.StudentsList.FirstOrDefault(s => s.Id == id);
 
-            Student student = Student.Find(id);
+            Student student = Student.FindStudnetToUpdate(id);
 
 
             if (student == null)
@@ -153,9 +154,12 @@ namespace StudentApi.Controllers
             }
 
 
-            student.Name = updatedStudent.Name;
-            student.Age = updatedStudent.Age;
-            student.GPA = updatedStudent.GPA;
+            student.Name = string.IsNullOrEmpty(updatedStudent.Name) ? student.Name : updatedStudent.Name;
+            student.Age = updatedStudent.Age <= 0 ? student.Age : updatedStudent.Age;
+            student.GPA = updatedStudent.GPA <= 0 ? student.GPA : updatedStudent.GPA;
+            student.Email = string.IsNullOrEmpty(updatedStudent.Email) ? student.Email : updatedStudent.Email;
+            student.PasswordHash = string.IsNullOrEmpty(updatedStudent.PasswordHash) ? student.PasswordHash : updatedStudent.PasswordHash;
+            student.Role = string.IsNullOrEmpty(updatedStudent.Role) ? student.Role : updatedStudent.Role;
             student.Save();
 
             //we return the DTO not the full student object.
