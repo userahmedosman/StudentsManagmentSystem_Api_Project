@@ -1,14 +1,11 @@
-﻿//using StudentApi.Models;
-//using StudentApi.DataSimulation;
+﻿
+using DTO;
 using Microsoft.AspNetCore.Mvc;
 using StudentBusinessLayer;
-using DTO;
-using Microsoft.IdentityModel.Tokens;
 
 namespace StudentApi.Controllers
 {
-    [ApiController] // Marks the class as a Web API controller with enhanced features.
-                    //  [Route("[controller]")] // Sets the route for this controller to "students", based on the controller name.
+    [ApiController]
     [Route("api/Students")]
 
     public class StudentsController : ControllerBase // Declare the controller class inheriting from ControllerBase.
@@ -64,7 +61,7 @@ namespace StudentApi.Controllers
         public ActionResult<decimal> GetAverageGPA()
         {
             //var averageGPA = StudentDataSimulation.StudentsList.Average(student => student.GPA);
-            decimal averageGPA =  Student.GetAverageGPA();
+            decimal averageGPA = Student.GetAverageGPA();
             return Ok(averageGPA);
         }
 
@@ -83,11 +80,6 @@ namespace StudentApi.Controllers
                 return BadRequest($"Not accepted ID {id}");
             }
 
-            //var student = StudentDataSimulation.StudentsList.FirstOrDefault(s => s.Id == id);
-            //if (student == null)
-            //{
-            //    return NotFound($"Student with ID {id} not found.");
-            //}
             Student student = Student.Find(id);
 
             if (student == null)
@@ -199,10 +191,10 @@ namespace StudentApi.Controllers
             if (image == null || image.Length == 0) return BadRequest("No file uploaded");
 
             var uploadLocation = @"C:\UploadImageDir";
-            var fileName =  Guid.NewGuid().ToString() + Path.GetExtension(image.FileName);
+            var fileName = Guid.NewGuid().ToString() + Path.GetExtension(image.FileName);
             var filePath = Path.Combine(uploadLocation, fileName);
 
-            if(!Directory.Exists(uploadLocation)) Directory.CreateDirectory(uploadLocation);
+            if (!Directory.Exists(uploadLocation)) Directory.CreateDirectory(uploadLocation);
 
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
