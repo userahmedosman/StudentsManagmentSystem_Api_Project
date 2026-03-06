@@ -1,5 +1,6 @@
 ﻿
 using DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StudentBusinessLayer;
 
@@ -7,6 +8,7 @@ namespace StudentApi.Controllers
 {
     [ApiController]
     [Route("api/Students")]
+    [Authorize]
 
     public class StudentsController : ControllerBase // Declare the controller class inheriting from ControllerBase.
     {
@@ -14,6 +16,7 @@ namespace StudentApi.Controllers
 
         [HttpGet("All", Name = "GetAllStudents")] // Marks this method to respond to HTTP GET requests.
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
         //here we used StudentDTO
@@ -36,6 +39,7 @@ namespace StudentApi.Controllers
 
         [HttpGet("Passed", Name = "GetPassedStudents")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
         // Method to get all students who passed
@@ -56,6 +60,7 @@ namespace StudentApi.Controllers
         [HttpGet("AverageGPA", Name = "GetAverageGPA")]
 
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
         public ActionResult<decimal> GetAverageGPA()
@@ -71,6 +76,7 @@ namespace StudentApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
 
         public ActionResult<StudentReturnDTO> GetStudentById(int id)
         {
@@ -100,6 +106,7 @@ namespace StudentApi.Controllers
         [HttpPost(Name = "AddStudent")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<StudentDTO> AddStudent(StudentDTO newStudentDTO)
         {
             //we validate the data here
@@ -128,6 +135,7 @@ namespace StudentApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<StudentDTO> UpdateStudent(int id, StudentDTO updatedStudent)
         {
             if (id < 1 || updatedStudent == null || string.IsNullOrEmpty(updatedStudent.Name) || updatedStudent.Age < 0 || updatedStudent.GPA < 0)
@@ -165,6 +173,7 @@ namespace StudentApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult DeleteStudent(int id)
         {
             if (id < 1)
@@ -207,6 +216,7 @@ namespace StudentApi.Controllers
         [HttpGet("GetImage/{fileName}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public IActionResult GetImage(string fileName)
         {
             var imageDir = @"C:\UploadImageDir";
