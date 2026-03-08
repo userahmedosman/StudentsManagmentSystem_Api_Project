@@ -130,7 +130,7 @@ namespace StudentApi.Controllers
 
 
         //here we use http put method for update
-        [Authorize(Roles = "admin")]
+        [AllowAnonymous]
         [HttpPut("{id}", Name = "UpdateStudent")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
